@@ -1,0 +1,1129 @@
+
+################################################################
+ex1)
+
+https://www.r-project.org/ - download - cran - korea - 제일 위에거 - window 선택
+
+r studio 선택
+
+데스크탑 다운
+
+Installers	Size	Date	MD5
+RStudio 1.1.456 - Windows Vista/7/8/10 이거 다운로드
+
+실행 Ctrl + Shift + Enter
+주석 Ctrl + Shift + C
+콘솔 창 리셋하기 Ctrl + L
+
+################################################################
+ex2) 출력 방법
+
+a<-10
+b<-20
+a
+print(b)
+
+################################################################
+ex3) 오칙 연산
+
+13+3
+13-3
+13*3
+13%/%3 #몫
+13%%3 #나머지
+
+################################################################
+ex4) 데이터 타입을 알아보기
+
+a<-10
+
+# 여러개의 데이터를 넣을 때 combin(c)로 묶어준다.
+b<-c(10,20,30,40)
+a
+b
+
+class(a) # "numeric"
+class(b)
+
+d<-c('호라잉','코끼리','앵무새')
+class(d) # "character"
+
+################################################################
+ex5) 수열과 배열로 인수를 보는 방법
+
+a<-c(10,20,30,40,50)
+a
+b<-c(5)
+b
+d<-c(3:7) #콜론을 이용해 데이터를 넣을 수 있다.
+d
+e<-seq(3,7) # 수열
+e
+f<-seq(3,7,2) # 3~7까지 2증가
+f
+g<-seq(3,20,by=4) # by는 생략 가능 4씩 증가
+g
+g[0] # r은 1부터 배열이 시작
+g[1]
+g[2]
+g[3]
+g[4]
+g[5]
+
+h<-c('tiger','lion')
+h[1]
+h[2]
+
+################################################################
+
+# 숫자를 한 개 넣으면 자동으로 1씩 증가하는 수열 생성
+i<-seq(10)
+i 
+
+# 한 줄로 바로 출력하고 싶을 떄
+a<-10; a
+b<-sqrt(9); b
+
+d<-c(100,'tiger'); d
+class(d) # "character" 문자로 타입이 바뀐다.
+
+e<-seq(5); e
+e<-e+3; e # 수열에 전부 3을 더해준다.
+
+f<-e*2; f
+
+################################################################
+ex6)
+
+a<-seq(12); a
+r1<-mean(a); r1 # 평균 값
+r2<-max(a); r2
+r3<-min(a); r3
+r4<-sum(a); r4
+r5<-median(a); r5 # 중앙 값
+
+################################################################
+ex7)
+
+a<-c(10,43,12,70,92,25); a
+b<-range(a); b # 숫자의 범위를 알려준다.
+length(a) # 데이터의 갯수를 알려준다.
+rank(a) # 순위를 알려준다. 작은 숫자 부터
+
+################################################################
+ex8) paste 함수: 문자를 연결해준다.
+
+a<-c('호랑이','코끼리','앵무새'); a
+
+#paste(): 두번째 인수의 조건을 기준으로 여러 문자열을 하나로 묶어줌
+b<-paste(a,''); b
+b<-paste(a,','); b
+b<-paste(a,' '); b
+b<-paste(a,collapse = ''); b #"호랑이코끼리앵무새"
+b<-paste(a,collapse = ','); b #"호랑이,코끼리,앵무새"
+b<-paste(a,collapse = ' '); b #"호랑이 코끼리 앵무새"
+
+c<-'호랑이'; c
+
+d<-paste(c,'거북이'); d #"호랑이 거북이" 
+
+################################################################
+ex9)
+
+#install.packages('ggplot2')
+library(ggplot2) # 나갔다가 들어오면 다시 실행
+
+################################################################
+ex10)
+
+#install.packages('ggplot2')
+#library(ggplot2) # 나갔다가 들어오면 다시 실행
+
+a<-c(10,10,20,10,20,30,10,20,30,40); a
+qplot(a) # 빈도 수 만큼 나타난다.
+
+################################################################
+ex11)  데이터 프레임 만들기
+
+a<-c(11,23,52,43,77) # a 필드
+b<-c(21,32,25,67,13) # b 필드
+c<-c(40,21,86,72,53) # c 필드
+df<-data.frame(a,b,c); df
+
+################################################################
+ex12)  
+
+국어<-c(11,23,52,43,77) # a 필드
+영어<-c(21,32,25,67,13) # b 필드
+수학<-c(40,21,86,72,53) # c 필드
+데이터프레임<-data.frame(국어,영어,수학); 데이터프레임
+
+################################################################
+ex13)  
+
+df<-data.frame(
+  a=c(11,23,52,43,77),
+  b=c(21,32,25,67,13), 
+  c=c(40,21,86,72,53)
+); df
+
+################################################################
+ex14)
+
+a<-c(11,23,52,43,77) # a 필드
+b<-c(21,32,25,67,13) # b 필드
+c<-c(40,21,86,72,53) # c 필드
+df<-data.frame(a,b,c); df
+
+df$a # 원하는 필드만 뽑아서 볼 수 있다. 
+df$b
+df$c
+
+# a는 국어 b는 수학 c는 영어
+mean(df$a) 
+mean(df$b) 
+mean(df$c)
+
+# 한 개 이상 출력하고 싶을때 
+sprintf("%d %d",10,20)
+
+# 소수 점은 %f를 사용한다. 
+sprintf("%.02f %.03f %.04f",mean(df$a),mean(df$b),mean(df$c))
+
+# 한 번에 여러개를 출력할 수 있다.
+cat(x,y,z)
+
+################################################################
+ex15) csv 파일 만들기
+
+a<-c(11,23,52,43,77) # a 필드
+b<-c(21,32,25,67,13) # b 필드
+c<-c(40,21,86,72,53) # c 필드
+df<-data.frame(a,b,c); df
+
+write.csv(df,file='sample01.csv')
+# 결과
+# "","a","b","c"
+# "1",11,21,40
+# "2",23,32,21
+# "3",52,25,86
+# "4",43,67,72
+# "5",77,13,53
+
+################################################################
+ex16) 파일 읽기
+
+df<-read.csv('sample01.csv'); df
+df$Kor
+
+# 필드 명을 바꿀 때 
+names(df)<-c('국어','영어','수학'); df
+
+df2<-read.csv('sample02.csv'); df2
+
+################################################################
+ex17) 데이터 프레임 관리
+
+df<-read.csv('sample02.csv'); df
+
+# ex1) 필드 이름 바꾸기
+names(df)<-c('a','b'); df
+
+# ex2)
+df$a
+df[1]
+
+# ex3) 
+head(df) # 처음부터 6개
+tail(df) # 끝에서 6개 
+
+# ex4)
+dim(df) # 행과 열의 갯수를 보여준다. 
+nrow(df) # 행의 갯수
+ncol(df) # 열의 갯수
+
+# ex5)
+names(df) # 필드 이름을 보여준다.
+rownames(df)
+colnames(df)
+
+# ex6)
+summary(df) # 기초통계량을 보여준다.
+
+# ex7)
+df
+df[,] # 위에 것과 같다.
+df[3,] # 3번 째 행을 모두 보여준다.
+df[,2] # 2번 째 열을 모두 보여준다.
+df[4,2] # 4행 2열에 있는 값을 보여준다.
+
+# ex8) 8월 데이터를 삭제 하자.
+df<-df[-8,]; df
+
+# ex9) 13월 데이터 추가.
+df['201213',]<-c(2000,3000); df
+
+# ex10) 열 추가
+df[,'c']<-seq(12); df
+
+################################################################
+ex18) 데이터 프레임 그래프
+
+#install.packages('ggplot2')
+library(ggplot2) # 나갔다가 들어오면 다시 실행
+
+df<-read.csv('sample02.csv'); df
+names(df)<-c('a','b'); df
+
+# 테이블로 보고 싶을 때 
+# View(df)
+
+df$c<-df$a+df$b; df # 데이터 가공 
+
+head(df,3) # 원하는 갯수만큼 볼 수 있다.
+
+sum(df$c) # 총 방문객 수 
+
+df$d<-df$c%/%1000; df
+
+hist(df$d) # 빈도수 그래프
+hist(df$a,nclass = 20)
+qplot(df$d)
+
+################################################################
+ex19) mpg 데이터 
+
+head(mpg)
+View(mpg)
+names(mpg)<-c('회사','모델','배기량','연식','실린더','변속기','구동','연비1','연비2','연료의 종류','차종')
+nrow(mpg)
+
+################################################################
+ex20) 랜덤 데이터
+
+# 랜덤 뽑기
+# replace는 중복 허용
+a<-sample(1:10,20,replace = T); a
+
+################################################################
+ex21) which
+
+qplot(a,bins=30) # 빈도수 확인 
+b<-table(a); b # 빈도수를 텍스트로 보여준다.
+
+a>=6
+length(a>=6) # 300
+c<-which(a>=6); c
+
+# which 원하는 조건의 index위치를 알려준다.
+length(which(a>=6))
+length(c)
+ 
+################################################################
+ex22) mpg 연비를 이용해서 평균 보다 큰 값을 찾아내기
+
+head(mpg)
+names(mpg)<-c('회사','모델','배기량','연식','실린더','변속기','구동','연비1','연비2','연료의 종류','차종')
+qplot(mpg$연비1,bins=80)
+dim(mpg) # 234  11 
+
+mpg[,'연비3']<-(mpg$연비1+mpg$연비2); mpg$연비3
+View(mpg)
+a<-mean(mpg$연비3)
+summary(mpg$연비3)
+summary(mpg$연비1)
+length(which(mpg$연비3>=a))
+
+################################################################
+ex23) if문 사용하기
+
+a<-c(1:10); a
+b<-sample(1:100,10,replace = T); b
+
+df<-data.frame(a,b); df
+
+ifelse(3>2,'호랑이','코끼리')
+df$c<-ifelse(df$b>=60,'합격','불합격')
+
+df
+table(df$c)
+qplot(df$c)
+
+
+################################################################
+ex24) 다중 if
+
+a<-c(1:10); a
+b<-sample(1:100,10,replace = T); b
+df<-data.frame(a,b); df
+
+
+df$c<-ifelse(df$b>90,'수',
+       ifelse(df$b>80,'우',
+              ifelse(df$b>70,'미',
+                     ifelse(df$b>60,'양','가'))))
+df
+
+table(df$c)
+qplot(df$c)
+
+################################################################
+ex25) 예제 분석
+
+summary(diamonds)
+dim(diamonds)
+View(diamonds)
+
+View(midwest)
+midwest[,c(5,10)]
+midwest$percent<-(midwest$popasian/midwest$poptotal)*100
+a<-midwest$percent; a
+sprintf('%0.03f',a)
+
+midwest$b<-ifelse(a>=mean(a),'높다','낮다'); b
+qplot(a,bins=80)
+
+qplot(midwest$b)
+table(midwest$b)
+midwest[,c(5,10,30)] 
+
+################################################################
+ex26) filter 함수,  dplyr
+
+#install.packages('dplyr')
+library('dplyr')
+
+name<-c('김유신','강감찬','세종대왕','이순신','장보고','정약용','유관순','김좌진')
+class<-sample(1:3,8,replace = T)
+kor<-sample(1:100,8,replace = T)
+eng<-sample(1:100,8,replace = T)
+mat<-sample(1:100,8,replace = T)
+df<-data.frame(name,class,kor,eng,mat); df
+dim(df)
+str(df)
+data.frame(df$name,df$mat)
+
+# crtl + shift + m
+# filter 함
+df %>% filter(class==1)
+df %>% filter(class!=1)
+df %>% filter(mat>=50)
+df %>% filter(class==1 & mat>=50) # and 조건 
+df %>% filter(kor>=30 & kor<=80)
+df %>% filter(kor<=30 | kor>=80) # or 조건 
+df %>% filter(kor>=70 | mat>=70)
+df %>% filter(kor<=50 & eng<=50 & mat<=50 & class==3)
+
+################################################################
+ex27) 필요한 데이터만 뽑아서 테이블을 만든다.
+
+r1<-df %>% filter(class==1); r1
+sum(r1$mat)
+sum(r1$kor)
+sum(r1$eng)
+
+################################################################
+ex28) select와 filter
+
+# 원하는 필드를 볼 수 있다.
+df %>% select(name,kor)
+
+# 필터와 섞어서 사용할 수 있다.
+df %>% 
+  filter(class==1) %>% 
+  select(name,mat)
+
+df %>% 
+  filter(class==1 | class==2 | class==3) %>% 
+  select(name,mat) %>% 
+  head # head를 사용할 수 있다.
+
+################################################################
+ex29)
+
+# 새로운 필드를 만들어준다. mutate()
+df1<-df %>% mutate(total=kor+eng+mat)
+df1
+
+df %>% mutate(a=ifelse(kor>=60,'합격','불합격'))
+df %>% mutate(a=kor,b=eng,c=mat) # 여러 개 필드를 만들 수 있다.
+
+################################################################
+ex30)
+
+# 정렬해주는 함수 arrange()
+df %>% arrange(kor); df #df가 바뀌는 것은 아니다.
+
+# mutate와 arrange의 합성 
+# df<-df %>% 
+#   mutate(total=kor+eng+mat) %>%
+#   arrange(total) %>% 
+#   select(name,total)
+# df 
+
+################################################################
+ex31)
+
+# summarise 데이터의 통계를 알고 싶을 떄 
+# n() 몇 개의 데이터가 있는지 
+# df %>% summarise(mean(kor),sum(kor),max(kor),min(kor),n())
+df1<-df %>% 
+  summarise(n1=sum(kor),n2=sum(eng),n3=sum(mat)) %>% 
+  mutate(total=n1+n2+n3) 
+dim(df1)
+
+# 수학 점수가 60점 이상인 이름과 수학점수를 출력
+df %>%  
+  filter(mat>=60) %>% 
+  select(name,mat) %>% 
+  arrange(mat)
+df %>%  
+  select(name,mat) %>% 
+  filter(mat>=60) %>% 
+  arrange(mat)
+
+################################################################
+ex32)
+
+# 그룹과 통계는 함께 사용된다.
+df %>% 
+  group_by(class) %>% 
+  summarise(sum(kor), mean(kor))
+# <int>      <int>       <dbl>
+# 1     1         76        25.3
+# 2     2         48        48  
+# 3     3        207        51.8
+
+################################################################
+ex33) 데이터 프레임 합치기(옆으로)
+
+# a<-c(1,2,3)
+# b<-c(80,90,70)
+# df1<-data.frame(a,b); df1
+# 
+# a<-c(1,2,3)
+# c<-c(65,85,93)
+# d<-c('월','화','수')
+# df2<-data.frame(a,c,d); df2
+# 
+# # a 필드를 기준으로 합쳐진다.
+# df3<-left_join(df1,df2,by='a'); df3
+
+a<-c(1:6) # 학번 
+b<-c(10,20,30,30,20,10) # 수강신청 번호
+df1<-data.frame(a,b); df1
+
+b<-c(10,20,30)
+d<-c('컴공','일어','정외')
+df2<-data.frame(b,d); df2
+
+# 알아서 매칭을 해준다.
+df3<-left_join(df1,df2,by='b'); df3
+
+################################################################
+ex34) 데이터 프레임 합치기(세로로)
+
+a<-c(1,2,3) # 학번
+b<-c(10,20,30) # 오전 점수
+df1<-data.frame(a,b); df1
+
+a<-c(4,5,6)
+b<-c(40,50,60) # 오후 점수 
+df2<-data.frame(a,b); df2
+
+# 합칠 때 필드명이 같아야한다. 
+df3<-bind_rows(df1,df2); df3
+
+################################################################
+ex35)ggplot
+
+library('ggplot2') # 나갔다가 들어오면 다시 실행
+
+#install.packages('dplyr')
+library('dplyr')
+
+a<-sample(1:10,100,replace = T) 
+b<-sample(1:10,100,replace = T)  
+df<-data.frame(a,b); df
+
+# 그래프의 틀을 나타낸다(aes)
+ggplot(data = df, aes(x=a,by=b))
+
+################################################################
+ex36)ggplot 그래프 종류 나타내기 
+
+ggplot(data = df, aes(x=a,y=b))+
+  geom_point()
+
+################################################################
+ex37)ggplot x축 과 y축 범위 나타내기 
+
+ggplot(data = df, aes(x=a,y=b))+
+  geom_point()+
+  xlim(2,8)+ # x축 범위 
+  ylim(4,6) # y축 범위 
+
+################################################################
+ex38)그래프 예제
+
+a<-sample(1:10,100,replace = T) 
+b<-sample(1:10,100,replace = T)  
+df<-data.frame(a,b); df
+# 그래프의 틀을 나타낸다(aes)
+# 뒤에는 그래프 설정
+ggplot(data = df, aes(x=a,y=b))+
+  geom_point()
+
+head(mpg)
+
+ggplot(data = mpg, aes(x=mpg$cty,y=mpg$hwy))+
+  geom_point()
+
+head(diamonds)
+a<-diamonds$x*diamonds$y*diamonds$z
+a
+
+ggplot(data = diamonds, aes(x=a,y=diamonds$price))+
+  geom_point()
+
+head(economics)
+
+ggplot(data = economics, aes(x=economics$d,y=economics$unemploy))+
+  geom_point()
+
+################################################################
+ex39) geom_bar()
+
+a<-sample(1:10,100,replace = T)
+b<-sample(1:10,100,replace = T)
+df<-data.frame(a,b); df
+
+# 빈도 막대 그래프 
+ggplot(data = df, aes(x=a))+
+  geom_bar() 
+
+head(mpg)
+# View(mpg)
+
+################################################################
+ex40)
+ggplot(data = mpg, aes(x=class))+
+  geom_bar() 
+
+head(diamonds)
+ggplot(data = diamonds, aes(x=cut))+
+  geom_bar() 
+
+
+################################################################
+ex40)
+
+a<-sample(1:5,10,replace = T)
+b<-sample(1:10,10,replace = T)
+df<-data.frame(a,b); df
+
+# a를 가지고 있는 b의 합을 보여준다. 
+ggplot(data = df, aes(x=a,y=b))+
+  geom_col() 
+
+a<-c('남','여')
+b<-c(40,60)
+df<-data.frame(a,b); df
+
+# a를 가지고 있는 b의 합을 보여준다. 
+ggplot(data = df, aes(x=a,y=b))+
+  geom_col() 
+
+################################################################
+ex41)
+
+a<-c('호랑이','사자','캥거루','코알라','기린','표범')
+b<-c(0,0,0,1,1,1)
+c<-sample(6:14,6,replace = T)
+
+df<-data.frame(a,b,c); df
+
+df1<-df %>% 
+  group_by(b) %>% 
+  summarise(d=mean(c))
+df1
+
+# a를 가지고 있는 b의 합을 보여준다.
+ggplot(data = df1, aes(x=b,y=d))+
+  geom_col()
+
+################################################################
+ex42)
+
+a<-sample(1:4,20,replace = T) # 1반~4반
+b<-sample(1:100,20,replace = T) # 국어 점수
+c<-sample(1:100,20,replace = T) # 영어 점수 
+d<-sample(1:100,20,replace = T) # 수학 점수
+
+df<-data.frame(a,b,c,d); df
+df<-df %>% mutate(total=b+c+d)
+df
+
+df1<-df %>% 
+  group_by(a) %>% 
+  summarise(e=sum(total))
+df1
+
+# 반 별로 총점에 대한 빈도 그래프
+ggplot(data = df1, aes(x=a,y=e))+
+  geom_col()
+
+################################################################
+ex43)
+
+# 시계열 그래프를 그릴 때 
+ggplot(data = df, aes(x=a,y=b))+
+  geom_line()
+ 
+head(economics)
+
+ggplot(data = economics, aes(x=economics$date,y=economics$unemploy))+
+  geom_line()
+
+################################################################
+ex44)
+
+# a<-c(100); a
+# a[1]<-99
+# a[1]
+# a[2]<-88 # 자동으로 값을 추가할 수 있다.
+# 
+# # 음수도 sample을 뽑을 수 있다.
+# sample(-5:5,1,replace = T)
+# 
+# for (i in 1:10) {
+#   print(i)
+# }
+
+################################################################
+ex45)
+
+a<-c(1000)
+for (i in 1:99) {
+  print(i)
+  a[i+1]<-a[i]+sample(-500:500,1,replace = T)
+}
+a
+
+x1<-c(1:100)
+df<-data.frame(x1,a)
+
+ggplot(data = df, aes(x=x1,y=a))+
+  geom_line()
+
+################################################################
+ex46)
+
+# 성별에 따른 남녀 월급 차이
+a<-c(0,0,0,0,0,1,1,1,1,1) # 0여성, 1남성
+b<-c(200,250,230,270,280,300,320,330,350,400)
+df<-data.frame(a,b); df
+
+df1<-df %>% 
+  group_by(a) %>% 
+  summarise(s=sum(b),m=mean(b))
+df1$a[1]<-'여자'
+df1$a[2]<-'남자'
+
+# df1$a<-c('여자','남자')
+
+df1
+
+ggplot(data = df1, aes(x=a,y=m))+
+  geom_col()
+
+################################################################
+ex47)
+
+# 나이에 따른 월급의 시계열 그래프 
+age<-sample(20:80,10000,replace = T) # 나이
+b<-sample(100:500,10000,replace = T) #월급
+df<-data.frame(age,b); df
+
+df1<-df %>% 
+  group_by(age) %>% 
+  summarise(s=sum(b),m=mean(b))
+
+df1
+
+ggplot(data = df1, aes(x=age,y=m))+
+  geom_line()
+
+################################################################
+ex48)
+
+# 나이 구간별 월급의 그래프
+
+age<-sample(20:80,1000,replace = T) # 나이
+b<-sample(100:800,1000,replace = T) #월급
+df<-data.frame(age,b); df
+
+df1<-df %>% mutate(age1=ifelse(age<30,'20대',
+                            ifelse(age<40,'30대',
+                                   ifelse(age<50,'40대',
+                                          ifelse(age<60,'50대','60대 이상')))))
+df2<-df1 %>% 
+  group_by(age1) %>% 
+  summarise(m=mean(b))
+df2
+
+ggplot(data = df2, aes(x=age1,y=m))+
+  geom_col()
+
+# 그룹  필드   통계  시각화
+# 반 별 수학의 평균 그래프 그린다.
+# 성별 수면시간의 평균 그래프
+# 야구 팀별 타율 평균 그래프 
+# 차종별 연비 총합 그래프
+# 나이별 월급의 평균 그래프 
+
+################################################################
+ex49) 년도를 숫자로 바꾸기 
+
+head(economics)
+
+df<-economics
+
+df$year<-as.numeric(format(df$date, "%Y"))
+df
+
+df1<-df %>% mutate(year1=ifelse(year<1970,'1970년대',
+                               ifelse(year<1980,'1980년대', '90년대 이후')))
+df1
+
+df2<-df1 %>% 
+  group_by(year1) %>% 
+  summarise(실업률평균=mean(unemploy)) 
+df2
+
+ggplot(data = df2, aes(x=year1,y=실업률평균))+
+  geom_col()
+################################################################
+ex50) 
+
+b<-gsub(",","",a); b
+b1<-as.numeric(b)
+b1+100
+
+################################################################
+ex51) 
+
+# 연령대 별 월급에 대한 그래프, 성별의 비율
+a<-c(10,20,10,20) # 10대, 20대
+b<-c(10,20,30,40) # 월급 
+#c<-c('남','남','여','여')
+c<-c(0,0,1,1)
+df<-data.frame(a,b)
+
+ggplot(data = df, aes(x=a,y=b,fill=c))+
+  geom_col()
+
+################################################################
+ex52)  파이 차트
+
+#install.packages("plotrix")
+library(plotrix)
+
+remove.packages('reshape')
+
+# 연령대 별 월급에 대한 그래프, 성별의 비율
+a<-sample(1:100,1000,replace = T)
+df<-data.frame(a); df
+
+df1<-df %>% mutate(b=ifelse(a<=25,'1그룹',
+                            ifelse(a<=50,'2그룹', 
+                                   ifelse(a<=75,'3그룹','4그룹'))))
+df1
+
+df2<-df1 %>% 
+  group_by(b) %>% 
+  summarise(n=n())
+df2
+
+per<-round(df2$n/sum(df2$n)*100,1)
+lab<-paste(df2$b,'\n',per,'%')
+lab
+
+pie(df2$n, labels = lab, col = rainbow(length(b)), main = "그룹 별 빈도수")
+
+pie3D(df2$n, labels = lab, explode = 0.1, main = "그룹 별 빈도수")
+
+names(df2)<-c('group','count')
+df2
+
+ggplot(df2, aes(x='', y=count, fill=group))+
+   geom_bar(width = 1, stat = "identity")+
+   coord_polar("y", start=0)+
+  ggtitle("그룹별 빈도 그래프")
+
+
+################################################################
+ex53) 워드 크라우드 예제
+
+#remove.packages('ggplot2')
+#install.packages('ggplot2')
+#a<-sample(1:6,10,replace = T); a
+library('ggplot2') # 나갔다가 들어오면 다시 실행
+#head(mpg)
+
+#install.packages('dplyr')
+library('dplyr')
+
+#install.packages("plotrix")
+library(plotrix)
+
+#install.packages('rJava')
+#install.packages('memoise')
+#install.packages("KoNLP")
+library('KoNLP')
+
+# a<-'무궁화 꽃이 피었습니다.'; a # "무궁화 꽃이 피었습니다."
+# b<-extractNoun(a); b # "무궁화" "꽃"   
+# c<-c('무궁화','무궁화','무궁화','나무','나무','꽃','꽃','꽃','꽃','꽃'); c
+# d<-table(c); d 
+# #꽃   나무 무궁화 
+# #5      2      3 
+# df<-as.data.frame(d); df
+# # c Freq
+# # 1     꽃    5
+# # 2   나무    2
+# # 3 무궁화    3
+# 
+# #install.packages("wordcloud")
+# library('wordcloud')
+# wordcloud(words=df$c, freq=df$Freq, min.freq = 2, max.words = 100,
+#           colors = palette(),scale=c(3,0.5))
+
+#install.packages('RcolorBrewer')
+library('RColorBrewer')
+#install.packages("tm")
+library('tm')
+
+################################################################
+
+pal<-brewer.pal(12,"Paired")
+
+#x<-readLines("C:\\Users\\admin\\Desktop\\sample3.csv")
+x<-read.csv('sample101.csv',fileEncoding = 'UTF-8')
+
+y<-table(x); head(x)
+
+df<-as.data.frame(y); head(df)
+
+wordcloud(words=df$x, freq=df$Freq, min.freq = 2, 
+          max.words = 150, rot.per=.1,
+          colors = pal,scale=c(5,0.5),random.order = F)
+
+################################################################
+파이참 작업
+
+import urllib.request
+from konlpy.tag import Kkma
+
+client_id = "Ct5K_fXmE10hFNXiiWar"
+client_secret = "2TpmudDpbn"
+print(type(client_id), type(client_secret))
+
+# 내가 검색하고 싶은 단어를 적는다.
+encText = urllib.parse.quote("태풍")
+
+# 검색 범위 설정
+url = "https://openapi.naver.com/v1/search/news.json?query=" + \
+      encText + '&start=1&display=100'
+print(url)
+
+# 요청할 객체를 만든다.
+request = urllib.request.Request(url)
+request.add_header("X-Naver-Client-Id", client_id)
+request.add_header("X-Naver-Client-Secret", client_secret)
+
+# 크롤링 된 데이터는 response가 가지고 있다.
+response = urllib.request.urlopen(request)
+print(response)
+
+rescode = response.getcode()
+if (rescode == 200):
+    print("성공")
+    response_body = response.read().decode('utf-8')
+    # print(response_body.decode('utf-8'))
+    # print(response_body)
+    # print(type(response_body)) # str타입
+    # -----------------------------------------------------------------------
+
+    print('------------------------------------------')
+    # # 명사를 추출
+    # kkma = Kkma()  # Kkma 클래스 객체 생성
+    # c = kkma.nouns(response_body)  # 문자열을 받아 명사를 찾아 쪼개주는  함수
+    # print(c)
+    # # '중부', '곳곳', '경북', '북부', '호우', '호우특보', '특보'
+
+    from konlpy.tag import Okt
+
+    a = Okt()
+    c = a.nouns(response_body)
+    print("갯수", len(c))
+
+# for i in c:
+#     if len(i) == 1:
+#         c.remove(i)
+
+t = []
+for i in c:
+    if len(i) > 1:
+        t.append(i)
+
+c = t
+print(c[1])
+
+fw = open("sample101.csv", 'w', encoding="utf-8")
+
+print("----------------------------")
+s = 0;
+while s < len(c):
+    fw.write('%s\n' %(c[s]))
+    #print('%d,%d,%d' %(YearMonth[s],Foreigner[s],national[s]))
+    s = s + 1;
+print("----------------------------")
+fw.close()
+
+print("갯수", len(c))
+# print(c)
+ 
+################################################################
+ex54) rownames
+
+# a<-sample(1:10,5,replace = T)
+# b<-sample(1:10,5,replace = T)
+# df<-data.frame(a,b)
+# View(df)
+
+a<-sample(1:10,5,replace = T)
+b<-sample(1:10,5,replace = T)
+c<-c('T1','T2','T3','T4','T5') 
+df<-data.frame(a,b,row.names = c) # rowname을 만들어준다.
+View(df)
+
+################################################################
+ex55) rowname을 필드로 만들어 주기
+
+library('tibble')
+# a<-sample(1:10,5,replace = T)
+# b<-sample(1:10,5,replace = T)
+# c<-c('T1','T2','T3','T4','T5') 
+# df<-data.frame(a,b,row.names = c) # rowname을 만들어준다.
+# #View(df)
+# head(df)
+# df<-rownames_to_column(df,var = 'ttt'); head(df)
+
+#View(USArrests)
+df1<-USArrests
+df1<-rownames_to_column(df1,var = 'city'); head(df1)
+
+################################################################
+ex56) 대소문자로 바꾸기 
+
+df<-USArrests
+df<-rownames_to_column(df,var = 'city'); head(df)
+df$city<-tolower(df$city); head(df) # 소문자로 바꾸기
+#df$city<-toupper(df$city); head(df) # 대문자로 바꾸기 
+
+################################################################
+ex57) 지도 그래프 그리기
+
+library('tibble')
+
+#View(USArrests)
+df<-USArrests
+df<-rownames_to_column(df,var = 'city'); head(df)
+df$city<-tolower(df$city); head(df) # 소문자로 바꾸기
+#df$city<-toupper(df$city); head(df) # 대문자로 바꾸기 
+
+#install.packages('ggiraphExtra')
+library('ggiraphExtra')
+#install.packages('maps')
+library('maps')
+#install.packages('mapproj')
+library('mapproj')
+
+md<-map_data('state'); head(md)
+ggChoropleth(data=df,
+             aes(fill=Murder, map_id=city),
+             map = md,
+	 interactive = T)
+
+################################################################
+ex58)e패키지 모음
+#a<-sample(1:6,10,replace = T); a
+
+################################################################
+그래프 기초
+
+#remove.packages('ggplot2')
+#install.packages('ggplot2')
+library('ggplot2') # 나갔다가 들어오면 다시 실행
+
+################################################################
+%>%
+
+#install.packages('dplyr')
+library('dplyr')
+
+################################################################
+워드클라우드
+
+#install.packages("plotrix")
+library(plotrix)
+#install.packages('rJava')
+#install.packages('memoise')
+#install.packages("KoNLP")
+library('KoNLP')
+#install.packages("wordcloud")
+#library('wordcloud')
+
+#install.packages('RcolorBrewer') 색깔 넣어주기
+#library('RColorBrewer')
+#install.packages("tm") 언어 제거 하기
+#library('tm')
+
+################################################################
+지도 그림
+
+library('tibble')
+#install.packages('ggiraphExtra')
+library('ggiraphExtra')
+#install.packages('maps')
+library('maps')
+#install.packages('mapproj')
+library('mapproj')
+
+################################################################
+우리나라 지도
+
+#install.packages('stringi')
+library('stringi')
+#install.packages("devtools")  # 한번 설치한 경우에는 다시 설치할 필요 없습니다.
+#devtools::install_github("cardiomoon/Kormaps2014")
+library('kormaps2014')
+library('devtools')
+
+################################################################
+ex59) 우리나라 지도
+
+str(changeCode(kormap1)) 한글 깨지는거 방지
+#View(changeCode(kormap1))
+#View(changeCode(korpop1))
+head(changeCode(korpop1))
+# 행정구역별_읍면동, 총인구_명
+
+ggChoropleth(data=korpop1,
+             aes(fill=총인구_명, map_id=code),
+             map = kormap1,
+             interactive = T)
+
+################################################################
+ex60) 
