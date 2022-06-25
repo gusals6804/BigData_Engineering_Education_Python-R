@@ -1,0 +1,184 @@
+https://www.data.go.kr 여기 들어와서 관광자원통계서비스 입력
+자료를 요청한다.
+
+http://openapi.tour.go.kr/openapi/service 
+
+# from urllib2 import Request, urlopen
+# from urllib import urlencode, quote_plus
+#
+# url = 'http://openapi.tour.go.kr/openapi/service/TourismResourceStatsService/getPchrgTrrsrtVisitorList'
+# queryParams = '?' + urlencode({ quote_plus('ServiceKey') : '서비스키', quote_plus('YM') : '201201', quote_plus('SIDO') : '부산광역시', quote_plus('GUNGU') : '해운대구', quote_plus('RES_NM') : '부산시립미술관' })
+#
+# request = Request(url + queryParams)
+# request.get_method = lambda: 'GET'
+# response_body = urlopen(request).read()
+# print response_body
+
+# for y in range(2001, 2003):
+#     for i in range(1, 13):
+#         yyyymn = '%d%02d' % (y, i)  # 2000 01호
+#         print(yyyymn)
+
+import urllib.parse
+url = 'http://openapi.tour.go.kr/openapi/service/TourismResourceStatsService/getPchrgTrrsrtVisitorList'
+sk = 'DaENEbPuCJeSpdi%2FydkR2AC2q6MZ65wf%2B3hJwCkTVWQUNZxDHMOLqlh9HssuTGKmpBRfCocBfax7%2BlArMRSS5Q%3D%3D'
+a = '?_type=json&ServiceKey='+sk
+a += '&YM=201101'
+a += '&SIDO=' + urllib.parse.quote('부산')
+print(a)
+b = url + a
+print(b)
+
+import urllib.request
+r1 = urllib.request.Request(b)
+r2 = urllib.request.urlopen(r1)
+print(r2)
+
+if r2.getcode() == 200:
+    print('성공')
+    temp = r2.read().decode('utf-8')
+    print(temp)
+else:
+    print('실패')
+
+<----------------------------------------------------------------------------------------------------->
+
+"response":{
+    
+    "header":{
+        "resultCode":"0000",
+        "resultMsg":"OK"
+    },
+
+    "body":{
+        "items":{
+            "item":{
+                "addrCd":2635,
+                "csForCnt":286,
+                "csNatCnt":9110,
+                "gungu":"해운대구",
+                "resNm":"부산시립미술관",
+                "rnum":1,
+                "sido":"부산광역시",
+                "ym":201201
+            }
+        },
+        
+        "numOfRows":10,
+        "pageNo":1,
+        "totalCount":1
+    }
+}
+
+<----------------------------------------------------------------------------------------------------->
+이중 막대그래프
+
+YearMonth = []
+Foreigner = []
+national = []
+
+for y in range(2012, 2013):
+    for i in range(1, 13):
+        import urllib.parse
+
+        yyyymn = '%d%02d' % (y, i)  # 2000 01호
+        print(yyyymn)
+
+        url = 'http://openapi.tour.go.kr/openapi/service/TourismResourceStatsService/getPchrgTrrsrtVisitorList'
+        sk = 'DaENEbPuCJeSpdi%2FydkR2AC2q6MZ65wf%2B3hJwCkTVWQUNZxDHMOLqlh9HssuTGKmpBRfCocBfax7%2BlArMRSS5Q%3D%3D'
+        a = '?_type=json&ServiceKey=' + sk
+        a += '&YM='+yyyymn
+        a += '&SIDO=' + urllib.parse.quote('부산')
+        print(a)
+        b = url + a
+        print(b)
+
+        import urllib.request
+
+        r1 = urllib.request.Request(b)
+        r2 = urllib.request.urlopen(r1)
+        print(r2)
+
+        if r2.getcode() == 200:
+
+            print('성공')
+            temp = r2.read().decode('utf-8')
+            # print(type(temp))
+            print(temp)
+
+            import json
+            js = json.loads(temp)
+            print(type(js))
+            print(js)
+
+            print(js['response']['header']['resultMsg'])
+            print(js['response']['body']['items']['item']['csForCnt'])
+            print(js['response']['body']['items']['item']['csNatCnt'])
+            print(js['response']['body']['items']['item']['ym'])
+            # print('년월 :', temp['response']['body']['items']['item']['ym'], end=', ')
+            # # #            print('시도 :',temp['response']['body']['items']['item']['sido'],end=', ')
+            # # #            print('시군구 :',temp['response']['body']['items']['item']['gungu'],end=', ')
+            # # #            print('관광지 :',temp['response']['body']['items']['item']['resNm'],end=', ')
+            # print('외국인방문객수 :', temp['response']['body']['items']['item']['csForCnt'], end=', ')
+            # print('내국인방문객수 :', temp['response']['body']['items']['item']['csNatCnt'], end=', ')
+            YearMonth.append(str(js['response']['body']['items']['item']['ym']))
+            Foreigner.append(int(js['response']['body']['items']['item']['csForCnt']))
+            national.append(int(js['response']['body']['items']['item']['csNatCnt']))
+
+        else:
+            print('실패')
+
+import matplotlib.pyplot as plt
+
+import matplotlib.font_manager as fm
+fl = fm.FontProperties(fname='C:\Windows\Fonts\malgun.ttf').get_name() # 파일 경로 지시
+plt.rc('font', family=fl)
+
+x = YearMonth
+y1 = Foreigner
+y2 = national
+
+plt.title('2012년도 월별 외국인 및 내국인 관람객 수 현황')
+plt.xlabel('년도')
+plt.ylabel('관람객 수')
+plt.text(9.0, 120000.0, '최고 관람객 수')
+
+plt.bar(x, y1, label='외국인', color='b', width=0.3, align='center')
+
+x1 = []
+for i in range(len(x)):
+    x1.append(i+0.3)
+
+plt.bar(x1, y2, label='내국인', color='g', width=0.3)
+
+plt.legend()
+plt.show()
+
+<----------------------------------------------------------------------------------------------------->
+// 데이터 프레임 사용
+
+import pandas as pd
+d = [y1, y2]
+e = ['내국인', '외국인']
+f = x
+
+df = pd.DataFrame(d, index=e, columns=f).T
+print(df)
+
+df.plot(kind='bar', rot=0)
+plt.show()
+
+<----------------------------------------------------------------------------------------------------->
+// 텍스트 파일로 출력하기
+
+fw = open("sample3.txt", 'w', encoding="utf-8")
+fw.write('\"내국인\",'+'\"외국인\"\n')
+
+print("----------------------------")
+s = 0;
+while s < len(YearMonth):
+    fw.write('\"%d\",%d,%d\n' %(YearMonth[s],Foreigner[s],national[s]))
+    #print('%d,%d,%d' %(YearMonth[s],Foreigner[s],national[s]))
+    s = s + 1;
+print("----------------------------")
+fw.close()
