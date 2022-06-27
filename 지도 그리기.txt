@@ -1,0 +1,112 @@
+#install.packages('ggplot2') # 패키지 설치
+
+#remove.packages('ggplot2') # 패키지삭제
+
+library(ggplot2)
+
+#install.packages('dplyr') # 데이터 가공할때 사용
+
+#remove.packages('dplyr')
+
+library(dplyr)
+
+#install.packages('memoise')
+
+#install.packages('rJava')
+
+#install.packages('KoNLP') # 한글추출
+
+library(KoNLP)
+
+library(tibble)
+
+
+
+# temperature = read.csv('temperature.csv', fileEncoding = "UTF-8")
+
+# temperature
+
+
+
+lat<-c(35.250042,35.253719,35.254253,35.253355,35.252540,35.251585,35.250923,35.249924,
+       
+       35.246716,35.249924,35.250042,35.247963,
+       
+       35.246716,35.246710,35.248408,35.250923,35.249924)
+
+
+
+long<-c(128.900404,128.899558,128.901634,128.902288,128.902497,128.903030,128.903115,128.902353,
+        
+        128.902375,128.902353,128.900404,128.900380,
+        
+        128.902375,128.903730,128.904295,128.903115,128.902353)
+
+
+
+region<-c(1,1,1,1,1,1,1,1,2,2,2,2,3,3,3,3,3)
+Temp<-c(10,10,10,10,10,10,10,10,20,20,20,20,30,30,30,30,30)
+
+
+
+df1<-data.frame(lat,long,region,Temp)
+
+df1
+
+
+
+city1<-c(1,2,3)
+
+Temp<-sample(1:40,3, replace = T)
+
+
+
+temperature<-data.frame(city1,Temp)
+
+View(temperature)
+
+
+
+#install.packages("ggiraphExtra") #지도 그리기
+
+library(ggiraphExtra) #지도그려주는 라이브러리
+
+#install.packages('maps') #미국지도데이터
+
+library(maps)
+
+# install.packages("mapproj")
+
+library(mapproj)
+
+
+
+ggChoropleth(data=temperature,
+             
+             aes(fill=Temp,map_id=city1),
+             
+             map = df1,
+             
+             interactive = T
+             
+)
+
+# center <-c(mean(df1$long), mean(df1$lat))
+# kor <-get_map(center, zoom=13, maptype = "roadmap")
+# kor.map <-ggmap(kor)
+# kor.map
+# 
+# kor.map + 
+# geom_polygon(aes(fill = Temp, x = long, y = lat, group = region), 
+#                data = df1,
+#                alpha = 0.8, 
+#                color = "black",
+#                size = 0.2)
+
+# p<-kor.map+geom_polygon(data=df1,aes(x=lat, y=long)); p
+# p+scale_fill_gradient(low='red',high='green')
+# 
+# ggplot(aes(long, lat, group = group, fill = Murder)) + 
+#   geom_polygon() +
+#   coord_map("polyconic") +
+#   scale_fill_continuous(low = "pink", high = "black")
