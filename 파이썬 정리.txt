@@ -1,0 +1,593 @@
+<-------------------------------------------------------->
+20180825
+//23. 	for문으로 배열 출력
+en(), for index, value in enumerate(li)
+
+#23번. for 문으로 배열 만들기
+
+for a in range(10):
+    print(a, end=' ') # 출력 : 0 1 2 3 4 5 6 7 8 9
+print()
+
+#len () 함수: list 객체 개수 출력
+li = [10, 20, 30, 40]
+print(len(li)) # 출력 : 4
+print(li.__len__()) # 출력 : 4 이렇게도 가능
+
+for a in range(len(li)): #설명 : range는 숫자 유효범위를 구해주는데 len(li)가 4니까
+    print(a, end=' ') # 출력 : 0 1 2 3
+print()
+print(a, li[a])  # 출력 :3 40
+
+print('-----------------------------')
+
+# for문으로 배열 만들기 : for index, value in enumerate(li)사용
+## enumerate : li가 가진 내용을 참조해 데이터를 뽑아온다
+## index에는 0~4 출력, enumerate는 li 데이터 뽑아오기
+for index, value in enumerate(li):
+    print('[%d,%d]' % (index, value), end=' ') 
+    # 출력 : [0,10] [1,20] [2,30] [3,40]
+print()
+
+# for문으로 배열 만들기 : 문자열도 가능
+a = 'apple'
+print(len(a)) # 출력 : 5
+
+for index, value in enumerate(a):
+    print('[%d,%s]' % (index, value), end=' ')  # 출력 : [0,a] [1,p] [2,p] [3,l] [4,e]
+print()
+
+print('-----------------------------')
+
+# 이중 for문으로 배열만들기
+'''
+[0,0] [0,1] [0,2] [0,3] 
+[1,0] [1,1] [1,2] [1,3] 
+[2,0] [2,1] [2,2] [2,3]
+'''
+for a in range(3):
+    for b in range(4):
+        print('[%d,%d]' % (a, b), end=' ')
+    print()
+
+print('-----------------------------')
+
+# for문으로 배열 만들기 - list 사용
+'''
+[0,10] [0,20] [0,30] [0,40] 
+[1,10] [1,20] [1,30] [1,40] 
+[2,10] [2,20] [2,30] [2,40] 
+[3,10] [3,20] [3,30] [3,40]
+'''
+li = [10, 20, 30, 40]
+for a in range(len(li)):
+    for b in li:
+        print('[%d,%d]'% (a, b), end=' ')
+    print()
+
+
+<-------------------------------------------------------->
+//24. 함수 - 함수끼리 두줄 공백을 둔다 (다시정리)
+
+#함수의 형태
+## 전달 인수 없고, 리턴 값 없는 함수 1
+def func01():
+    print('Tiger')
+#함수 콜
+func01() # 출력 : Tiger
+
+## 전달 인수 있고 리턴 값 없는 함수 2
+def func02(a):
+    print(a)
+func02(5)   # 출력 : 5
+func02(150) # 출력 : 150
+
+## 전달 인수 없고 리턴 값이 100인 함수 3
+def func03():
+    print('Lion')
+    return 100
+func03()        # 출력 : Lion
+a = func03() # 리턴 값 출력하기 위해서는 객체로 연결
+print(a)        # 출력 : Lion 100
+print(func03()) # 출력 : Lion 100
+
+## 전달 인수 있고 리턴 값도 있는 함수 4
+def func04(a):
+    print('Rabit')
+    return a * 10
+print(func04(100)) # 출력 : Rabbit 1000
+
+print('==============!')
+## 전달 인수 세개인 함수 5
+def func05(a,b,c):
+    print('hello',end=' ')
+    print(a, b, c)
+print()
+func05(1,2,3) # 출력 : hello 1 2 3
+
+## 전달 인수 세개인 함수 6
+def func06(a,b,c):
+    print('bye', end=' ')
+    return a + b + c
+print(func06(1,2,3)) # 출력 : bye 6
+
+##전달인수 강아지,3 출력 : 강아지가 멍 *3 웁니다
+def func07(a,b):
+    print('%s가'%a, end=' ')
+    for c in range(b):
+         print('멍',end=' ')
+    print('웁니다',end=' ')
+
+func07('강아지', 3)
+## 전달인수 a가 멍이라고 b번 웁니다 (for문 없이)
+def func08(a,b):
+    print('%s가' % a, end=' ')
+    print('멍'*b ,end=' ')
+    print('웁니다')
+func08('강아지',3)
+
+## 전달인수 a가 b 라고 c번 웁니다 (for문 없이)
+def func09(a,b,c):
+    print('%s가 %s'% (a, b*c),'웁니다')
+func09('냥이','야옹',3)
+<-------------------------------------------------------->
+//25. 함수 전달인수 특징
+
+##전달인수로 list던질 수 있다
+def func01(a):
+    print('함수1')
+func01([10,20,30]) # 출력 : 함수1
+
+def func02():
+    print('호랑이')
+func02() # 출력 : 호랑이
+'''
+##python에서는 함수 재정의 할 수 없다(오버로딩 X)
+def func(a):
+    print('인수 있음')
+
+func02()
+func02(3)
+'''
+def func03():
+    print('코끼리')
+
+func03() # 출력: 코끼리
+
+## 같은 이름의 함수를 만들 경우 이전 함수는 사라진다
+def func03():
+    print('앵무새')
+func03() # 출력: 앵무새
+
+##함수 전달 인수에 초기 값 설정 가능
+## 중간 인수에만 디폴트 값 지정 안됨 def func06(a ,b=88, c)
+def func04(a,b,c=99):
+   #인수 전달 두개 넣을 경우 c에 디폴트 값 들어감
+    print(a, b, c)
+
+func04(10,20,30) # 출력: 10 20 30
+func04(40, 50) # 출력 : 40 50 99
+
+def func05(a, b=88, c=99):
+    print(a, b, c)
+func05(10) # 출력 : 10 88 99
+func05(10,20) # 출력 : 10 20 99
+func05(10, 20, 30) # 출력 : 10 20 30
+
+
+<-------------------------------------------------------->
+//26. 	리턴값과 튜플
+
+##리턴 값에 , 를 사용하여 여러 개 넣을 수 있다 (튜플로 받는다)
+def func07(a,b):
+    print('함수1')
+    return a+b, a-b , a*b
+result = func07(3,5)
+print(result)   # 출력 : 함수1 (8, -2, 15)
+
+# 결과 값이 ()로 나오는 경우 : 튜플-> 데이터 갱신 X
+print(result[0]) #출력 : 8
+#result[0] = 100 TypeError: 'tuple' object does not support item assignmen
+#for 구문은 데이터 갱신이 아니므로 사용가능
+for a in result:
+    print(a,end=' ') # 출력: 8 -2 15
+print()
+
+#
+a = (10,20,30) # a: 튜플
+b = list(a) # b: list
+print(a, b) # 출력 : (10, 20, 30) [10, 20, 30]
+
+<-------------------------------------------------------->
+//27. 	파일 생성 Write
+
+#파일 생성
+'''
+## write: 실행 두번하면 기존파일 날라감
+## encoding="utf-8" 해줘야 한글 가능
+## open과 close 사이에서 입, 출력
+project 왼쪽에 untitled 위치 복사
+찾아 들어가면 sample 파일 메모장으로도 확인 가능
+'''
+
+fw = open("sample.txt", 'w', encoding="utf-8")
+
+##for문에 출력 가능
+fw.write("Tiger\n") #자동줄맞춤 안됨
+for a in range(10):
+    fw.write(str(a))
+    #fw.write(a)는 TypeError: write() argument must be str, not int
+fw.write("코끼리")
+
+fw.close()
+
+
+
+<-------------------------------------------------------->
+//28. 	파일에 5단 출력 프로그램 넣기
+
+#28번. 파일에 단 출력 프로그램 넣기
+
+#파일 생성
+
+fw = open("sample.txt", 'w', encoding="utf-8")
+
+##for문에 출력 가능
+fw.write("Tiger\n") #자동줄맞춤 안됨
+for a in range(1,10):
+    s = 5 * a
+    fw.write(str('5 * %d = %d \n' %(a,s)))
+    #fw.write(a)는 TypeError: write() argument must be str, not int
+fw.write("코끼리")
+
+fw.close()
+
+<-------------------------------------------------------->
+//29. 	파일출력 응용
+- 국영수 점수 출력 방법 1
+random.sample(range())
+
+#국영수 점수 출력 방법 1 - 점수 중복 안됨 random.sample(range())
+import random
+
+fw = open("sample.txt", 'w', encoding="utf-8")
+
+fw.write('국어'+'영어'+'수학\n')
+for a in range(5):
+    jumsu = random.sample(range(101),3)
+    #print(jumsu) # 출력 : [23, 91, 14] list
+    output = '%d,%d,%d' %(jumsu[0],jumsu[1],jumsu[2])+'\n'
+    print(output) #출력 : 23,91,14
+    fw.write(output)
+
+fw.write("코끼리")
+fw.close()
+
+'''
+출력 결과
+국어영어수학
+58,68,8
+61,77,50
+21,34,23
+36,24,41
+42,28,41
+코끼리
+'''
+### .csv 파일 : ,로 이루어진 형식의 파일
+
+<-------------------------------------------------------->
+//30. 	파일출력 응용
+- 국영수 점수 출력 방법 2
+random.randrange(101)
+
+#국영수 점수 출력 방법 2 - 점수 중복 가능 random.randrange(101)
+
+import random
+
+fw = open("sample.txt", 'w', encoding="utf-8")
+
+fw.write('국어'+'영어'+'수학\n')
+for a in range(5):
+    a = random.randrange(101)  # random.choice(range(101)) 함수 : 하나 선택 (중복 가능)
+    b = random.randrange(101)
+    c = random.randrange(101)
+    output = '%d,%d,%d' % (a, b, c) + '\n'
+    print(output)
+    fw.write(output)
+
+fw.write("코끼리")
+fw.close()
+
+'''
+출력 결과
+국어영어수학
+93,28,33
+72,95,25
+30,52,74
+16,47,56
+93,11,5
+코끼리
+'''
+
+<-------------------------------------------------------->
+//31.	파일 읽기 Read
+
+#파일 읽기 Read
+import random
+
+fr = open("sample.txt", 'r', encoding="utf-8")
+line = fr.readline()
+
+##한 줄 읽기. 출력 : 국어영어수학
+print(line)
+
+##모든 라인 읽기 1- while문 잘 안씀
+while True:
+    line = fr.readline()
+    if not line:
+        break
+
+     print(line)
+
+##모든 라인 읽기 2
+li = fr.readlines()
+#print(li) 리스트로 불러옴
+for a in li:
+     print (a, end='')
+
+##모든 라인 읽기 3
+s = fr.read()
+print(s)
+
+fr.close()
+<-------------------------------------------------------->
+//32. 	Python class
+#Python class 만들기
+
+class Tiger:
+    a = 10
+    b = 20 # 멤버 객체
+
+     #생성자 함수.  파이썬은 함수 오버로딩 불가능
+    def __init__(self):
+        print('Tiger 생성자')
+
+    def func01(self): #self 무조건 붙는다
+        print('함수 1 콜')
+
+    def func02(self,x,y):
+        a = x
+        b = y
+        print(a,b)
+
+    def show(self):
+        print(self.a, self.b) # 멤버안에 들어있는 변수 쓰려면 self.인수
+
+t1 = Tiger() # 출력 : Tiger 생성자
+t1.func01() # 출력 : 함수 1 콜
+t1.func02(50,60)  # 출력 : 50 60
+t1.show() # 출력 : 10 20
+
+class Lion:
+    pass #클래스 생성만 하고 천천히 기능 추가 원할 때 사용
+
+t2 = Lion()
+print(id(t2)) #객체 생성 되었는지 확인 31461264
+
+<-------------------------------------------------------->
+//33. 	class 의 상속 => 
+다형성 사용하기 주는 놈과 받는 놈이 다를 때
+
+class Animal:
+    def func01(self):
+        print('부모함수1')
+
+    def func03(self):
+        print('부모함수3')
+
+class Dog(Animal): # Animal 상속
+    def func02(self):
+        print('자식함수2')
+
+    def func03(self):
+        print('자식함수3')
+
+dog = Dog()
+dog.func01() # 출력 : 부모함수1
+dog.func02() # 출력 : 자식함수2
+dog.func03() # 출력 : 자식함수3
+
+<-------------------------------------------------------->
+//34.class 의 상속 => 다형성(python은 타입 없어서 자동)
+다형성 사용하기 주는 놈과 받는 놈이 다를 때
+
+
+#Python class 만들기
+class A:
+    def func01(self):
+        print('A함수1')
+
+class B(A):
+    def func01(self):
+        print('B함수1')
+
+class C(A):
+    def func01(self):
+        print('C함수1')
+
+def run(t):
+    t.func01()
+
+a = A() # A클래스 객체a 생성
+b = B()
+run(a) # 출력 : A함수1
+run(b) # 출력 : B함수1
+run(C()) # 출력 : C함수1
+
+p1 = [a, b, C()] #list 안에 a,b,c() 객체 세개 갖겠다
+p1[0].func01() # 출력 : A함수1
+p1[1].func01() # 출력 : B함수1
+p1[2].func01() # 출력 : C함수1
+
+print('--------')
+for a in p1:
+    a.func01()
+'''
+출력
+A함수1
+B함수1
+C함수1
+'''
+
+<-------------------------------------------------------->
+untitled new pythonfile name: Tiger 만들어서 시작
+//35.
+#방법 1 -------------------------------------------
+<타이거>
+def func01():
+    print('함수1 콜')
+
+<헬로>
+# 모듈 -알면 좋고 몰라도 상관 없다
+# Hello 파일에서 Tiger파일의 함수 사용하고 싶을 때 => 모듈화 한다
+import Tiger
+Tiger.func01() # 출력 : 함수1 콜
+
+#방법 2--------------------------------------------
+
+<타이거>
+def func01():
+    print('함수1 콜')
+
+<헬로>
+from Tiger import*
+func01()
+
+print(100)
+print(200)
+print(300)
+
+	하지만 이건 문제가 있다 메인 파일이 무엇인지!
+	Alt Shift F10 또는 Run 메뉴에서 메인파일 변경 가능
+
+	임포트 할때 실행코드가 있으면 실행을 해버림(함수만 콜 X)
+	결과 : 100 200 300 함수1 콜
+
+	원래 목적은 함수하나 끌어당기는 것
+
+해결책: 
+if __name__ =='__main__':
+이 코드 밑에서 모든 것을 작성한다
+
+사용 하기 예 )
+
+untitled new NewDirectory
+untitled new pythonfile name: Lion
+<Lion>
+def func02():
+    print('함수2 콜')
+
+<hello>
+if __name__ =='__main__':
+    from Tiger import *
+    func01()
+
+    #방법 1
+    # import ent. Lion
+    # ent.Lion.func02()
+
+    #방법 2
+    # from ent.Lion import *
+    # func02()
+<-------------------------------------------------------->
+Hello02 만들어서 진행
+//36. 내장함수
+
+print('주 메인')
+#내장함수
+##abs() 함수 : 절대값
+print(abs(5))   # 출력 : 5
+print(abs(-5))  # 출력 : 5
+
+##chr(숫자) 함수 : ASCII 코드값을 받아 문자 출력
+print(chr(65))
+#print(ord())와 반대
+
+## divmod(11,3) 함수:  몫과 나머지 구해준다-튜플형태
+a = divmod(11,3)
+print(a)   # 출력 :(3, 2)
+
+## eval() 함수 : 문자 열 안에 있는 내용을 파이썬 명령(문법)으로 인식, 실행한 값 출력
+a = '1+2'
+print(a) # 출력 : 1+2
+print(eval(a))
+
+b = 'print(100)'
+print(b) # 출력 :print(100)
+eval(b) # 출력 :100
+
+<-------------------------------------------------------->
+
+//37. 외장함수
+
+#외장함수
+
+##webbrowser.open("웹브라우저 URL ")
+import webbrowser
+webbrowser.open("http://google.com")
+<-------------------------------------------------------->
+//38. 필터링
+
+def func01(t):
+    return t >= 30
+def func02(t):
+    return t % 3 == 0
+def func03(t):
+    print(t)
+    return len(t) > 1
+def func04(t):
+    if len(t) > 1:
+        return t
+
+a = [10, 20, 30, 40, 50]
+b = list(filter(func01, a)) # 첫 번째 이름은 함수 이름만 적어준다. ()는 쓰지 않는다.
+print(b)
+b = list(filter(func02, a))
+print(b)
+
+a = ['봄', '여름', '가을', '겨울']
+b = list(filter(func03, a))
+print(b)
+
+b = list(filter(func04, a))
+print(b)
+
+<-------------------------------------------------------->
+// 38. 년도, 월 생성하기
+
+for y in range(2001, 2003):
+    for i in range(1, 13):
+        yyyymn = '%d%02d' % (y, i)  # 2000 01호
+        print(yyyymn)
+
+<-------------------------------------------------------->
+// 39. 데이트 프레임으로 그래프 만들기
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+fl = fm.FontProperties(fname='C:\Windows\Fonts\malgun.ttf').get_name() # 파일 경로 지시
+plt.rc('font', family=fl)
+
+a = [1, 2, 3, 4, 5]
+b = [1, 7, 9, 4, 5]
+c = [3, 6, 9, 2, 5]
+d = [a, b, c]
+e = ['내국인', '외국인', '독수리']
+f = ['1월', '2월', '3월', '4월', '5월']
+
+df = pd.DataFrame(d, index=e, columns=f).T
+print(df)
+
+df.plot(kind='bar', rot=0)
+plt.show()
