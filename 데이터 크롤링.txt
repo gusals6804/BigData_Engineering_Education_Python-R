@@ -1,0 +1,868 @@
+https://developers.naver.com/apps/#/wizard/register 여기 들어와서  오픈 API 설치
+
+아이디
+Ct5K_fXmE10hFNXiiWar
+
+패스워드
+2TpmudDpbn
+
+#------------------------------------------------------------------------------------------------------
+
+import urllib.request
+
+client_id = "Ct5K_fXmE10hFNXiiWar"
+client_secret = "2TpmudDpbn"
+print(type(client_id), type(client_secret))
+
+# 내가 검색하고 싶은 단어를 적는다.
+encText = urllib.parse.quote("태풍")
+
+# 검색 범위 설정
+url = "https://openapi.naver.com/v1/search/news.json?query=" + \
+      encText + '&start=1&display=100'
+print(url)
+
+# 요청할 객체를 만든다.
+request = urllib.request.Request(url)
+request.add_header("X-Naver-Client-Id", client_id)
+request.add_header("X-Naver-Client-Secret", client_secret)
+
+# 크롤링 된 데이터는 response가 가지고 있다.
+response = urllib.request.urlopen(request)
+print(response)
+
+rescode = response.getcode()
+if(rescode==200):
+    print("성공")
+    response_body = response.read()
+    print(response_body)
+    print(response_body.decode('utf-8'))
+else:
+    print("Error Code:" + rescode)
+    print("실패")
+
+#------------------------------------------------------------------------------------------------------
+
+import urllib.request
+
+client_id = "Ct5K_fXmE10hFNXiiWar"
+client_secret = "2TpmudDpbn"
+print(type(client_id), type(client_secret))
+
+# 내가 검색하고 싶은 단어를 적는다.
+encText = urllib.parse.quote("태풍")
+
+# 검색 범위 설정
+url = "https://openapi.naver.com/v1/search/news.json?query=" + \
+      encText + '&start=1&display=100'
+print(url)
+
+# 요청할 객체를 만든다.
+request = urllib.request.Request(url)
+request.add_header("X-Naver-Client-Id", client_id)
+request.add_header("X-Naver-Client-Secret", client_secret)
+
+# 크롤링 된 데이터는 response가 가지고 있다.
+response = urllib.request.urlopen(request)
+print(response)
+
+rescode = response.getcode()
+if(rescode==200):
+    print("성공")
+    response_body = response.read().decode('utf-8')
+    # print(response_body.decode('utf-8'))
+    # print(response_body)
+    print(type(response_body)) # str타입
+else:
+    print("Error Code:" + rescode)
+    print("실패")
+
+#------------------------------------------------------------------------------------------------------
+명사 추출하기
+
+import urllib.request
+from konlpy.tag import Kkma
+
+client_id = "Ct5K_fXmE10hFNXiiWar"
+client_secret = "2TpmudDpbn"
+print(type(client_id), type(client_secret))
+
+# 내가 검색하고 싶은 단어를 적는다.
+encText = urllib.parse.quote("태풍")
+
+# 검색 범위 설정
+url = "https://openapi.naver.com/v1/search/news.json?query=" + \
+      encText + '&start=1&display=100'
+print(url)
+
+# 요청할 객체를 만든다.
+request = urllib.request.Request(url)
+request.add_header("X-Naver-Client-Id", client_id)
+request.add_header("X-Naver-Client-Secret", client_secret)
+
+# 크롤링 된 데이터는 response가 가지고 있다.
+response = urllib.request.urlopen(request)
+print(response)
+
+rescode = response.getcode()
+if(rescode==200):
+    print("성공")
+    response_body = response.read().decode('utf-8')
+    # print(response_body.decode('utf-8'))
+    # print(response_body)
+    print(type(response_body)) # str타입
+
+    print('------------------------------------------')
+    # 명사를 추출
+    kkma = Kkma()  # Kkma 클래스 객체 생성
+    c = kkma.nouns(response_body)  # 문자열을 받아 명사를 찾아 쪼개주는  함수
+    print(c)  # 출력 : 결과를 list 로 돌려준다
+    # '중부', '곳곳', '경북', '북부', '호우', '호우특보', '특보'
+
+else:
+    print("Error Code:" + rescode)
+    print("실패")
+
+#------------------------------------------------------------------------------------------------------
+빈도수 보기
+
+# 중복된 것을 제거해서 보여준다. # Kkma
+from konlpy.tag import Kkma
+a = Kkma() # Kkma 클래스 객체 생성
+b = '호랑이 나비 달린다 토끼 향기로운 나비 코끼리 토끼 나비' #문자열로 구성된 b
+c = a.nouns(b) # 문자열을 받아 명사를 찾아 쪼개주는  함수
+print(c) # 출력 : ['호랑이', '나비', '토끼', '향기'] 결과를 list 로 돌려준다
+for i in c:
+    print(i) # 출력 : 호랑이 나비 토끼 향기
+print('-----------------------------------------')
+
+# 중복되어도 모든 명사를 다 출력해준다. # Okt
+from konlpy.tag import Okt
+a = Okt() # Kkma 클래스 객체 생성
+b = '호랑이 나비 달린다 토끼 향기로운 나비 코끼리 토끼 나비' #문자열로 구성된 b
+c = a.nouns(b) # 문자열을 받아 명사를 찾아 쪼개주는  함수
+print(c) # 출력 : ['호랑이', '나비', '토끼', '향기'] 결과를 list 로 돌려준다
+for i in c:
+    print(i) # 출력 : 호랑이 나비 토끼 향기
+print('--------------------------------------------')
+
+# 빈도 수를 출력해준다. #collections.Counter
+import collections
+d = collections.Counter(c) # 객체 생성
+print(d)
+# 결과 : Counter({'나비': 3, '토끼': 2, '호랑이': 1, '달린다': 1, '코끼리': 1})
+
+d1 = []
+d2 = []
+for key, value in d.most_common(3):
+    print(key)
+    d1.append(key)
+    d2.append(value)
+print(d1) # 빈도수가 높은 명사 이름을 3개 알려준다. ['나비', '토끼', '호랑이']
+print(d2) # 빈도수를 알려준다. [3, 2, 1]
+
+#------------------------------------------------------------------------------------------------------
+한 글자 날리고 빈도 수 구하기
+
+import urllib.request
+from konlpy.tag import Kkma
+
+client_id = "Ct5K_fXmE10hFNXiiWar"
+client_secret = "2TpmudDpbn"
+print(type(client_id), type(client_secret))
+
+# 내가 검색하고 싶은 단어를 적는다.
+encText = urllib.parse.quote("태풍")
+
+# 검색 범위 설정
+url = "https://openapi.naver.com/v1/search/news.json?query=" + \
+      encText + '&start=1&display=100'
+print(url)
+
+# 요청할 객체를 만든다.
+request = urllib.request.Request(url)
+request.add_header("X-Naver-Client-Id", client_id)
+request.add_header("X-Naver-Client-Secret", client_secret)
+
+# 크롤링 된 데이터는 response가 가지고 있다.
+response = urllib.request.urlopen(request)
+print(response)
+
+rescode = response.getcode()
+if(rescode==200):
+    print("성공")
+    response_body = response.read().decode('utf-8')
+    # print(response_body.decode('utf-8'))
+    # print(response_body)
+    # print(type(response_body)) # str타입
+#-----------------------------------------------------------------------
+   
+    print('------------------------------------------')
+    # # 명사를 추출
+    # kkma = Kkma()  # Kkma 클래스 객체 생성
+    # c = kkma.nouns(response_body)  # 문자열을 받아 명사를 찾아 쪼개주는  함수
+    # print(c)  
+    # # '중부', '곳곳', '경북', '북부', '호우', '호우특보', '특보'
+
+    from konlpy.tag import Okt
+    a = Okt()
+    c = a.nouns(response_body)
+    print("갯수", len(c))
+
+#-------------------------------------------------------------------------
+한 글자 날리기
+
+    # for i in c:
+    #     if len(i) == 1:
+    #         c.remove(i)
+
+    t = []
+    for i in c:
+        if len(i) > 1 :
+            t.append(i)
+
+    c = t
+    print(c)
+    print("갯수", len(c))
+    # print(c)
+
+#----------------------------------------------------------------------------
+빈도수 구하기
+
+    import collections
+    d = collections.Counter(c)  # 객체 생성
+    # print(d)
+
+    d1 = []
+    d2 = []
+    for key, value in d.most_common(20):
+        d1.append(key)
+        d2.append(value)
+    print(d1)
+    print(d2)
+
+else:
+    print("Error Code:" + rescode)
+    print("실패")
+
+#------------------------------------------------------------------------------------------------------
+import로 함수 사용하는 방법
+
+# ex1 구분해서 쓰기 좋다.
+# import matplotlib.pyplot
+#
+# matplotlib.pyplot.plot()
+# matplotlib.pyplot.show()
+
+# ex2
+# from matplotlib.pyplot import *
+#
+# plot()
+# show()
+
+# ex3
+import matplotlib.pyplot as plt
+
+plt.plot()
+plt.show()
+
+#------------------------------------------------------------------------------------------------------
+그래프 그리는 방법
+
+# ex1
+# import matplotlib.pyplot as plt
+#
+# plt.plot()
+# plt.show()
+
+#ex2
+# import matplotlib.pyplot as plt
+#
+# x = [10, 20, 30, 40, 50]
+# # plt.plot(x, 'r-') # b-가 디폴트 되어있고 선 색깔을 바꿀 수 있다.
+# # plt.plot(x, 'bo') # - 선 o는 점으로 나타낸다.
+# # plt.plot(x, 'bv') # 체크 옵션으로 바뀐다.
+# plt.plot(x, 'b-v') # 점과 선을 이어준다.
+# plt.show()
+
+#  ex3
+import matplotlib.pyplot as plt
+x = [5, 4, 3, 2, 1]
+h = [5, 50, 25, 77, 34]
+
+# 예제 그래프
+plt.plot(x,h)
+plt.show()
+
+h = []
+for i in random.sample(a, 100):
+    h.append(i)
+print(h)
+
+x = list(range(100))
+print(x)
+
+plt.plot(x, h)
+
+#------------------------------------------------------------------------------------------------------
+생성자에 인수 받는 법
+
+class Tiger:
+    def __init__(self, aaa=10, bbb=0):
+        print(aaa, bbb)
+
+t1 = Tiger(10, 20)
+t2 = Tiger()
+t3 = Tiger(30)
+t4 = Tiger(bbb=999) # 받는 놈 변수와 동일한 이름으로 하면 넣을 수 있다.
+
+class Lion:
+    def __init__(self, aaa=None, bbb=None):
+        print(aaa, bbb)
+
+l1 = Lion(aaa='호랑이')
+l2 = Lion(bbb='호랑이')
+
+plt.show()
+
+#------------------------------------------------------------------------------------------------------
+한글 출력
+
+import matplotlib.pyplot as plt
+
+#----------------------------------------------------------------
+
+# 한글 작업
+# 원하는 글씨체에 오른 쪽 버튼으로 속성 창에 있는 이름을 본다.
+import matplotlib.font_manager as fm
+fl = fm.FontProperties(fname='C:\Windows\Fonts\malgun.ttf').get_name() # 파일 경로 지시
+plt.rc('font', family=fl)
+
+#----------------------------------------------------------------
+
+plt.title('호랑아') # 제목 이름 한글은 되지 않는다.
+
+plt.plot()
+plt.show()
+
+#------------------------------------------------------------------------------------------------------
+그래프 속성
+
+plt.title('호랑아') 
+
+# x축과 y축 이름
+plt.xlabel('연령별')
+plt.ylabel('연봉')
+
+# 원하는 좌표에 글자를 적을 수 있다.
+plt.text(2.0, 30.0, '최대연봉')
+plt.text(5.0, 10.0, '최소연봉')
+
+#격자를 만들어 준다.
+plt.grid(True)
+
+x = [1, 2, 3, 4, 5]
+y = [10, 30, 10, 20, 10]
+x1 = [1, 2, 3, 4, 5]
+y1 = [30, 20, 15, 40, 10]
+
+plt.plot(x,y,'r',x1,y1,'b')
+plt.show()
+
+#------------------------------------------------------------------------------------------------------
+그래프 여러개를 한 번에 보여줄 때
+
+plt.title('호랑아') 
+
+x1 = [1, 2, 3, 4, 5]
+h1 = [10, 30, 10, 20, 10]
+x2 = [1, 2, 3, 4, 5]
+h2 = [15, 40, 50, 20, 30]
+
+# 여러개의 도표를 사용할 때
+plt.subplot(2, 3, 1)
+plt.plot(x1, h1)
+plt.subplot(2, 3, 3)
+plt.plot(x1, h1)
+plt.subplot(2, 3, 5)
+plt.plot(x2, h2)
+
+plt.show()
+
+#------------------------------------------------------------------------------------------------------
+막대 그래프
+
+plt.title('호랑아') 
+x1 = [1, 2, 3, 4, 5]
+h1 = [10, 30, 10, 20, 10]
+
+plt.bar(x1,h1)
+
+plt.show()
+
+#------------------------------------------------------------------------------------------------------
+막대 그래프와 plot을 섞어서 사용
+
+plt.title('호랑아') 
+x1 = [1, 2, 3, 4, 5]
+h1 = [10, 30, 10, 20, 10]
+
+plt.bar(x1, h1,)
+
+# 축을 바꿔서 사용할 때
+plt.twinx()
+plt.plot(x1, [7, 20, 15, 10, 30], 'r',)
+
+#------------------------------------------------------------------------------------------------------
+bar의 속성
+
+plt.title('호랑아') # 제목 이름 한글은 되지 않는다.
+
+x1 = ['하나', '둘', '삼', '넷', '오']
+h1 = [10, 30, 10, 20, 10]
+
+# plt.bar(x1, h1)
+# plt.bar(x1, h1, 0.2) # 막대 바의 크기를 조절할 수 있다.
+
+# plt.ylim(80.80) # 화면의 기준을 설정
+
+# 막대 바를 잘라서 보고 싶을 때
+# plt.bar(x1, h1, 0.3, [5, 7, 8, 20, 12],) # 갯수를 같게 해줘야한다.
+# plt.bar(x1, h1, 0.3, 0)
+
+# alpha는 색상의 진하기 조절
+plt.bar(x1, h1, 0.3, 0, color='r', alpha=0.75, align='edge') # align을 제일 마지막에 쓴다.
+plt.show()
+
+# https://matplotlib.org/index.html 여기서 더 찾아보기
+
+#------------------------------------------------------------------------------------------------------
+import urllib.request
+from konlpy.tag import Kkma
+
+client_id = "Ct5K_fXmE10hFNXiiWar"
+client_secret = "2TpmudDpbn"
+print(type(client_id), type(client_secret))
+
+# 내가 검색하고 싶은 단어를 적는다.
+encText = urllib.parse.quote("태풍")
+
+# 검색 범위 설정
+url = "https://openapi.naver.com/v1/search/news.json?query=" + \
+      encText + '&start=1&display=100'
+print(url)
+
+# 요청할 객체를 만든다.
+request = urllib.request.Request(url)
+request.add_header("X-Naver-Client-Id", client_id)
+request.add_header("X-Naver-Client-Secret", client_secret)
+
+# 크롤링 된 데이터는 response가 가지고 있다.
+response = urllib.request.urlopen(request)
+print(response)
+
+rescode = response.getcode()
+if(rescode==200):
+    print("성공")
+    response_body = response.read().decode('utf-8')
+    # print(response_body.decode('utf-8'))
+    # print(response_body)
+    # print(type(response_body)) # str타입
+
+    print('------------------------------------------')
+    # # 명사를 추출
+    # kkma = Kkma()  # Kkma 클래스 객체 생성
+    # # b = '호랑이 나비 달린다 토끼 향기로운'  # 문자열로 구성된 b
+    # c = kkma.nouns(response_body)  # 문자열을 받아 명사를 찾아 쪼개주는  함수
+    # print(c)  # 출력 : ['호랑이', '나비', '토끼', '향기'] 결과를 list 로 돌려준다
+    # # '중부', '곳곳', '경북', '북부', '호우', '호우특보', '특보'
+
+    from konlpy.tag import Okt
+    a = Okt()
+    c = a.nouns(response_body)
+    print("갯수", len(c))
+
+    # for i in c:
+    #     if len(i) == 1:
+    #         c.remove(i)
+
+    t = []
+    for i in c:
+        if len(i) > 1 :
+            t.append(i)
+
+    c = t
+    print(c)
+    print("갯수", len(c))
+    # print(c)
+
+    import collections
+    d = collections.Counter(c)  # 객체 생성
+    # print(d)
+
+    d1 = []
+    d2 = []
+    for key, value in d.most_common(30):
+        d1.append(key)
+        d2.append(value)
+    print(d1)
+    print(d2)
+
+    import matplotlib.pyplot as plt
+    import matplotlib.font_manager as fm
+
+    fl = fm.FontProperties(fname='C:\Windows\Fonts\malgun.ttf').get_name()  # 파일 경로 지시
+    plt.rc('font', family=fl)
+    print('--------------------------------------------')
+
+    plt.title('태풍 관련 검색어 TOP30')  # 제목 이름 한글은 되지 않는다.
+    #글자 기울기를 조절한다.
+    plt.xticks(range(30), d1, rotation='70')
+    plt.bar(d1, d2)
+    plt.plot(d1, d2, 'ko-')
+    plt.show()
+
+else:
+    print("Error Code:" + rescode)
+    print("실패")
+
+#------------------------------------------------------------------------------------------------------
+텍스트 마이닝
+
+pytagcloud
+pygame
+simplejson
+
+한글 설정
+C:\Users\admin\PycharmProjects\Project\venv\Lib\site-packages\pytagcloud\fonts 여기로 들어간다.
+
+여기에 맑은 고딕을 옮긴다.
+
+fonts.json에 제일 위해 추가한다.
+
+{
+		"name": "Korea",
+		"ttf": "malgun.ttf",
+		"web": "http://fonts.googleapis.com/css?family=Nobile"
+	},
+
+#----------------------------------------------------------------------
+
+import urllib.request
+from konlpy.tag import Kkma
+
+client_id = "Ct5K_fXmE10hFNXiiWar"
+client_secret = "2TpmudDpbn"
+print(type(client_id), type(client_secret))
+
+# 내가 검색하고 싶은 단어를 적는다.
+encText = urllib.parse.quote("주식")
+
+# 검색 범위 설정
+url = "https://openapi.naver.com/v1/search/news.json?query=" + \
+      encText + '&start=1&display=100'
+print(url)
+
+# 요청할 객체를 만든다.
+request = urllib.request.Request(url)
+request.add_header("X-Naver-Client-Id", client_id)
+request.add_header("X-Naver-Client-Secret", client_secret)
+
+# 크롤링 된 데이터는 response가 가지고 있다.
+response = urllib.request.urlopen(request)
+print(response)
+
+rescode = response.getcode()
+if(rescode==200):
+    print("성공")
+    response_body = response.read().decode('utf-8')
+    # print(response_body.decode('utf-8'))
+    # print(response_body)
+    # print(type(response_body)) # str타입
+
+    print('------------------------------------------')
+    # # 명사를 추출
+    # kkma = Kkma()  # Kkma 클래스 객체 생성
+    # # b = '호랑이 나비 달린다 토끼 향기로운'  # 문자열로 구성된 b
+    # c = kkma.nouns(response_body)  # 문자열을 받아 명사를 찾아 쪼개주는  함수
+    # print(c)  # 출력 : ['호랑이', '나비', '토끼', '향기'] 결과를 list 로 돌려준다
+    # # '중부', '곳곳', '경북', '북부', '호우', '호우특보', '특보'
+
+    from konlpy.tag import Okt
+    a = Okt()
+    c = a.nouns(response_body)
+    print("갯수", len(c))
+
+    # for i in c:
+    #     if len(i) == 1:
+    #         c.remove(i)
+
+    t = []
+    for i in c:
+        if len(i) > 1 :
+            t.append(i)
+
+    c = t
+    print(c)
+    print("갯수", len(c))
+    # print(c)
+
+    import collections
+    d = collections.Counter(c)  # 객체 생성
+    # print(d)
+
+    d1 = []
+    d2 = []
+    for key, value in d.most_common(30):
+        d1.append(key)
+        d2.append(value)
+    print(d1)
+    print(d2)
+
+    import matplotlib.pyplot as plt
+    import matplotlib.font_manager as fm
+
+    fl = fm.FontProperties(fname='C:\Windows\Fonts\malgun.ttf').get_name()  # 파일 경로 지시
+    plt.rc('font', family=fl)
+    print('--------------------------------------------')
+
+    plt.title('태풍 관련 검색어 TOP30')  # 제목 이름 한글은 되지 않는다.
+    #글자 기울기를 조절한다.
+    plt.xticks(range(20), d1, rotation='70')
+    plt.bar(d1, d2)
+    # plt.show()
+
+#----------------------------------------------------------------------
+
+    # 텍스트 마이닝
+    import pytagcloud
+
+    a = d.most_common(100)
+    print(a)
+
+    a10 = pytagcloud.make_tags(a, maxsize=70)
+    print(a10)
+    pytagcloud.create_tag_image(a10, 'sample.png', fontname='Korea', rectangular=False)
+
+    import webbrowser
+
+    webbrowser.open('sample.png')
+
+    # 한글 설정
+
+
+else:
+    print("Error Code:" + rescode)
+    print("실패")
+
+#------------------------------------------------------------------------------------------------------
+
+# BeautifulSoup4 다운
+
+# https://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=cnt&date=20180828
+
+# import bs4.BeautifulSoup
+
+from bs4 import BeautifulSoup
+import urllib.request
+
+html = urllib.request.urlopen('https://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=cnt&date=20180828')
+print(html)
+
+s = BeautifulSoup(html, 'html.parser')
+print(s)
+
+# div 태그를 찾아라,
+t = s.find_all('div', attrs={'class':'tit3'})
+# print(t)
+
+# for i in t:
+#     # print(i)
+#     print(i.a.text) # a 태그 안에 text를 뽑아준다.
+
+
+# <div class="tit3">
+# <a href="/movie/bi/mi/basic.nhn?code=140652" title="너의 결혼식">너의 결혼식</a>
+# </div>
+
+#------------------------------------------------------------------------------------------------------
+# 영화별 평점
+
+# https://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=cnt&date=20180828
+
+# import bs4.BeautifulSoup
+
+from bs4 import BeautifulSoup
+import urllib.request
+
+html = urllib.request.urlopen('https://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=cur&date=20180828')
+print(html)
+
+s = BeautifulSoup(html, 'html.parser')
+print(s)
+
+# div 태그를 찾아라,
+t = s.find_all('div', attrs={'class':'tit5'})
+t1 = s.find_all('td', attrs={'class':'point'})
+# print(t)
+
+a = []
+for i in t:
+    # print(i)
+    # print(i.a.text) # a 태그 안에 text를 뽑아준다.
+    a.append(i.a.text)
+a.reverse()
+print(a)
+
+b = []
+for j in t1:
+    # print(j.text)
+    b.append(float(j.text))
+b.reverse()
+print(b)
+print(len(b))
+
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+
+fl = fm.FontProperties(fname='C:\Windows\Fonts\malgun.ttf').get_name()  # 파일 경로 지시
+plt.rc('font', family=fl)
+print('--------------------------------------------')
+
+plt.title('태풍 관련 검색어 TOP30')  # 제목 이름 한글은 되지 않는다.
+plt.xticks(range(47), a, rotation='90')
+plt.ylim(0,10)
+plt.bar(a,b)
+plt.show()
+
+#------------------------------------------------------------------------------------------------------
+
+산포도
+데이터프레임 pandas 패키지 다운
+
+import matplotlib.pyplot as plt
+
+# 1.
+# a = [1, 2, 3, 4, 5]
+# b = [10, 20, 30, 40, 50]
+#
+# # 산포도
+# plt.scatter(a, b, 400)
+# plt.show()
+
+# 2.
+# import numpy as np
+#
+# a = np.random.randint(0, 100, 200) # 0~100까지 랜덤으로 200개 뽑아라
+# b = np.random.randint(0, 100, 200)
+#
+# plt.scatter(a, b)
+# plt.show()
+
+# 3.
+import numpy as np
+
+a = [150, 160, 170, 180, 190, 200, 210, 220, 230, 240]
+b = [30, 45, 55, 69, 71, 83, 92, 102, 123, 127]
+
+plt.scatter(a, b)
+plt.show()
+
+#------------------------------------------------------------------------------------------------------
+
+# 4.
+import pandas as pd
+
+# a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # 나이 필드
+# b = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] # 이름 필드
+# c = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30] # 고향 필드
+# d = [a, b, c]
+#
+# df = pd.DataFrame(d).T
+# print(type(df))
+# print(df)
+
+# 5. 상관계수
+# a = [1, 2, 3, 4, 5]
+# b = [10, 20, 30, 40, 50]
+# c = [a, b]
+
+import pandas as pd
+
+# df = pd.DataFrame(c).T
+# print(df)
+# f = df.corr(method='pearson')
+# print(f)
+
+import numpy as np
+
+# a = np.random.randint(0, 100, 200) # 0~100까지 랜덤으로 200개 뽑아라
+# b = np.random.randint(0, 100, 200)
+# c =[a, b]
+#
+# df = pd.DataFrame(c).T
+# print(df)
+# f = df.corr(method='pearson')
+# print(f)
+
+# a = [150, 160, 170, 180, 190, 200, 210, 220, 230, 240]
+# b = [30, 45, 55, 69, 71, 83, 92, 102, 123, 127]
+# c = [a, b]
+#
+# df = pd.DataFrame(c).T
+# print(df)
+# f = df.corr(method='pearson')
+# print(f)
+#
+# plt.scatter(a, b)
+# plt.title(f[0][1]) # 상관계수가 title로 들어간다.
+# plt.show()
+
+# 6.
+# a2000 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # 나이 필드
+# a2001 = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] # 이름 필드
+# a2002 = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30] # 고향 필드
+# d = [a2000, a2001, a2002]
+#
+# df = pd.DataFrame(d).T
+# print(df)
+# print(d[2][9])
+
+# 7. 필드 명을 만들어 주기
+# a2000 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # 나이 필드
+# # a2001 = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] # 이름 필드
+# # a2002 = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30] # 고향 필드
+# #
+# # df = pd.DataFrame().T
+# # df['2000'] = a2000
+# # df['2001'] = a2001
+# # df['2002'] = a2002
+# # print(df['2002'][9])
+
+# 8. 랜덤으로 숫자 뽑아서 만들기
+import numpy as np
+
+a = np.random.randint(0, 100, 12)
+
+a2000 = np.random.randint(0, 100, 12)
+a2001 = np.random.randint(0, 100, 12)
+a2002 = np.random.randint(0, 100, 12)
+a2003 = np.random.randint(0, 100, 12)
+
+df = pd.DataFrame().T
+df['2000'] = a2000
+df['2001'] = a2001
+df['2002'] = a2002
+df['2003'] = a2003
+print(df)
+
+seaborn 다운
+
+import seaborn
+
+seaborn.heatmap(df)
+plt.show()
+
+#------------------------------------------------------------------------------------------------------
+
+
